@@ -73,6 +73,8 @@ var transporter = nodemailer.createTransport({
     }
 })
 
+
+//setup forgot password api
 router.post('/forgotPassword',(req,res)=>{
     const user= req.body;
     query = "SELECT email,user_password FROM recipient WHERE email=?";
@@ -103,6 +105,50 @@ router.post('/forgotPassword',(req,res)=>{
             return res.status(500).json(err);
         }
     })
+})
+
+
+//get all the users details api
+router.get('/get',(req,res)=>{
+    var query = "SELECT recipient.email,post.post,status FROM recipient LEFT JOIN post ON recipient.post_id=post.post_id  WHERE post.post!='administrator'";
+    connection.query(query,(err,results)=>{
+        if(!err){
+            return res.status(200).json(results);
+        }
+        else{
+            return res.status(500).json(err);
+        }
+    })
+})
+
+
+//change the status from UI using api
+router.patch('/update',(req,res)=>{
+    let user = req.body;
+    var query ="Update recipient SET status=? WHERE email=?";
+    connection.query(query,[user.status,user.email],(err,results)=>{
+        if(!err){
+            if(results.affectedRows == 0){
+                return res.status(404),json({message:"User email does not exist"})
+            }
+            return res.status(200).json({message:"User Updated Successfully."});
+        }
+        else{
+            return res.status(500).json(err);
+        }
+    })
+})
+
+
+
+router.get('/checkToken',(req,res)=>{
+    return res.status(200).json({message: "true"});
+})
+
+
+//Reset password for user
+router.post('/changePassword',(req,res)=>{
+
 })
 
 module.exports = router;
