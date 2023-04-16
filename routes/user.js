@@ -4,11 +4,11 @@ const router = express.Router();
 
 //for generate jw token import
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 
-
-//signup or login by checking database
+//initial setup for signup or login by checking database
 router.post('/signup', (req, res) => {
     let user = req.body;
     query = "SELECT email,user_password FROM recipient WHERE email=?";
@@ -36,7 +36,8 @@ router.post('/signup', (req, res) => {
     })
 })
 
-//user login api
+
+//Setup user login api
 router.post('/login', (req, res) => {
     const user = req.body;
     query = "SELECT recipient.email,recipient.user_password,post.post,status FROM recipient LEFT JOIN post ON recipient.post_id=post.post_id  WHERE email=?";
@@ -59,6 +60,46 @@ router.post('/login', (req, res) => {
             }
         }
         else {
+            return res.status(500).json(err);
+        }
+    })
+})
+
+var transporter = nodemailer.createTransport({
+    service : 'gmail',
+    auth:{
+        user:process.env.EMAIL,
+        pass:process.env.PASSWORD
+    }
+})
+
+router.post('/forgotPassword',(req,res)=>{
+    const user= req.body;
+    query = "SELECT email,user_password FROM recipient WHERE email=?";
+    connection.query(query,[user.email],(err,results)=>{
+        if(!err){
+            if(results.length <= 0){
+                return res.status(200).json({message:"Password sent successfully to your email."})
+            }
+            else{
+                var mailOptions ={
+                    from: process.env.EMAIL,
+                    to: results[0].email,
+                    subject: 'Password by EmailManager.',
+                    html: '<p><b>Your Login Details of EmailManager</b><br><b>Email: </b>'+results[0].email+'<br><b>Password: </b>'+results[0].user_password+'<br><a href="http://localhost:4200/">Click here to login</a></p>'
+                };
+                transporter.sendMail(mailOptions,function(error,info){
+                    if(error){
+                        console.log(error);
+                    }
+                    else{
+                        console.log('Email sent: '+info.response);
+                    }
+                });
+                return res.status(200).json({message:"Password sent successfuly to your email."});
+            }
+        }
+        else{
             return res.status(500).json(err);
         }
     })
