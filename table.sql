@@ -1,7 +1,7 @@
 USE mailmanagejs;
 
 CREATE TABLE post(
-    post_id INT PRIMARY KEY,
+    post_id INT PRIMARY KEY AUTO_INCREMENT,
     post VARCHAR(255),
     discription VARCHAR(255)
 );
