@@ -7,6 +7,9 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+var auth = require('../services/authentication');
+var checkRole = require('../services/checkRole');
+
 
 //initial setup for signup or login by checking database
 router.post('/signup', (req, res) => {
@@ -108,8 +111,9 @@ router.post('/forgotPassword',(req,res)=>{
 })
 
 
-//get all the users details api
-router.get('/get',(req,res)=>{
+//get all the users details using token, api
+//Only admin can use that method (because checkRole function)
+router.get('/get',auth.authenticateToken,checkRole.checkRole,(req,res)=>{
     var query = "SELECT recipient.email,post.post,status FROM recipient LEFT JOIN post ON recipient.post_id=post.post_id  WHERE post.post!='administrator'";
     connection.query(query,(err,results)=>{
         if(!err){
@@ -122,8 +126,9 @@ router.get('/get',(req,res)=>{
 })
 
 
-//change the status from UI using api
-router.patch('/update',(req,res)=>{
+//change the status value in the table from UI using api
+//Only admin can use that method (because checkRole function)
+router.patch('/update',auth.authenticateToken,checkRole.checkRole,(req,res)=>{
     let user = req.body;
     var query ="Update recipient SET status=? WHERE email=?";
     connection.query(query,[user.status,user.email],(err,results)=>{
@@ -141,14 +146,41 @@ router.patch('/update',(req,res)=>{
 
 
 
-router.get('/checkToken',(req,res)=>{
+router.get('/checkToken',auth.authenticateToken,(req,res)=>{
     return res.status(200).json({message: "true"});
 })
 
 
-//Reset password for user
-router.post('/changePassword',(req,res)=>{
-
+//Reset password for user api
+router.post('/changePassword',auth.authenticateToken,(req,res)=>{
+    const user = req.body;
+    const email = res.locals.email; //email address get using token
+    console.log(email);
+    var query = "SELECT *FROM recipient WHERE email=? AND user_password=?";
+    connection.query(query,[email,user.oldPassword],(err,results)=>{
+        if(!err){
+            if(results.length <= 0){
+                return res.status(400).json({message:"Incorrect old password"})
+            }
+            else if(results[0].user_password == user.oldPassword){
+                var query = "UPDATE recipient SET user_password=? WHERE email=?"
+                connection.query(query,[user.newPassword,email],(err,results)=>{
+                    if(!err){
+                        return res.status(200).json({message:"Password Updated Successfully."})
+                    }
+                    else{
+                        return res.status(500).json(err);
+                    }
+                })
+            }
+            else{
+                return res.status(400).json({message:"Something went wrong. Please try again later"})
+            }
+        }
+        else{
+            return res.status(500).json(err);
+        }
+    })
 })
 
 module.exports = router;
