@@ -5,9 +5,8 @@ const router = express.Router();
 var auth = require('../services/authentication');
 var checkRole = require('../services/checkRole');
 
-
 //Send or recieve message only for registered users
-router.post('/add',auth.authenticateToken,(req,res)=>{
+router.post('/compose',auth.authenticateToken,(req,res)=>{
     let message_data = req.body;
     var query = "INSERT INTO message_data(fromAddr,toAddr,heading,body,sent_date,sent_time) values(?,?,?,?,curdate(),curtime())";
     connection.query(query,[message_data.fromAddr,message_data.toAddr,message_data.heading,message_data.body,message_data.sent_date,message_data.sent_time],(err,results)=>{
@@ -23,9 +22,9 @@ router.post('/add',auth.authenticateToken,(req,res)=>{
 
 //Get all sent mails by particular sender
 router.get('/sentBox',auth.authenticateToken,(req,res,next)=>{
-    let from = req.body;
+    const from = res.locals.email; //email address get using token
     var query = "SELECT fromAddr,toAddr,heading,body,sent_date,sent_time FROM message_data WHERE fromAddr=?";
-    connection.query(query,[from.fromAddr],(err,results)=>{
+    connection.query(query,[from],(err,results)=>{
         if(!err){
             return res.status(200).json(results);
         }
@@ -38,9 +37,9 @@ router.get('/sentBox',auth.authenticateToken,(req,res,next)=>{
 
 //Get all recieve mails for particular email
 router.get('/inBox',auth.authenticateToken,(req,res,next)=>{
-    let to = req.body;
+    const to = res.locals.email; //email address get using token
     var query = "SELECT fromAddr,toAddr,heading,body,sent_date,sent_time FROM message_data WHERE toAddr=?";
-    connection.query(query,[to.toAddr],(err,results)=>{
+    connection.query(query,[to],(err,results)=>{
         if(!err){
             return res.status(200).json(results);
         }

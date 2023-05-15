@@ -17,12 +17,16 @@ CREATE TABLE recipient(
     FOREIGN KEY(post_id) REFERENCES post(post_id)
 );
 
+
+--All sent messages save message_data table
 CREATE TABLE message_data(
     message_id INT PRIMARY KEY,
-    email VARCHAR(50) NOT NULL,
+    fromAddr VARCHAR(50) NOT NULL,
+    toAddr VARCHAR(50) NOT NULL,
     heading VARCHAR(255),
     body VARCHAR(255),
     sent_date DATE,
     sent_time TIME,
-    FOREIGN KEY(email) REFERENCES recipient(email)
+    FOREIGN KEY(fromAddr) REFERENCES recipient(email)
+    FOREIGN KEY(toAddr) REFERENCES recipient(email)
 );

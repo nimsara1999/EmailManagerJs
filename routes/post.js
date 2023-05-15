@@ -1,4 +1,4 @@
-//post.js use for add or remove new posts to post table
+//post.js use for add or remove new posts to the post table
 const express = require('express');
 const connection = require('../connection');
 const router = express.Router();
