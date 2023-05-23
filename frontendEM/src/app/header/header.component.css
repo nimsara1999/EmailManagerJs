@@ -1,0 +1,31 @@
+header{
+    background:black;
+    padding:5px;
+    border-bottom:1px solid black;
+}
+a{
+    color: aliceblue;
+    text-decoration: none;
+    padding: 1em;
+}
+a:hover{
+    color: yellow;
+}
+.container{
+    margin:0 auto;
+    display:flex;
+    justify-content: space-between;
+}
+a.logo{
+    font-weight: bold;
+    padding:1em;
+}
+nav ul{
+    list-style-type: none;
+    margin: 0;
+}
+
+nav ul li a{
+    padding: lem;
+    display:inline-block;
+}
