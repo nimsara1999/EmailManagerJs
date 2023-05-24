@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog'; 
 import { SignupComponent } from '../signup/signup.component';
+import { RepositionScrollStrategy } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-header',
@@ -16,8 +17,10 @@ ngOnInit(): void {
   
 signupAction() {
   const dialogConfig = new MatDialogConfig();
-  dialogConfig.width="550px";
-  dialogConfig.height="150px";
+  dialogConfig.width="425px";
+  dialogConfig.height="auto";
+  dialogConfig.autoFocus= true;
+  dialogConfig.backdropClass="blurbackdrop";
   this.dialog.open(SignupComponent,dialogConfig);
 }
 
