@@ -7,12 +7,13 @@
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="signupForm">
         <div fxFlex fxLayout ="column">
+
             <mat-form-field appearence="fill" fxFlex>
-                <mat-label>Name</mat-label>
-                <input matInput formControlName="name" required>
-                <mat-error *ngIf="signupForm.controls.name.touched && signupForm.controls.name.invalid">
-                    <span *ngIf="signupForm.controls.name.errors.required">This field is mendatory</span>
-                    <span *ngIf="signupForm.controls.name.errors.pattern">This field is invalid</span>
+                <mat-label>Full Name</mat-label>
+                <input matInput formControlName="recip_name" required>
+                <mat-error *ngIf="signupForm.controls.recip_name.touched && signupForm.controls.recip_name.invalid">
+                    <span *ngIf="signupForm.controls.recip_name.errors.required">This field is mendatory</span>
+                    <span *ngIf="signupForm.controls.recip_name.errors.pattern">This field is invalid</span>
                 </mat-error>
             </mat-form-field>
 
@@ -26,13 +27,47 @@
             </mat-form-field>
 
             <mat-form-field appearence="fill" fxFlex>
-                <mat-label>Password</mat-label>
-                <input matInput formControlName="password" required>
-                <mat-error *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid">
-                    <span *ngIf="signupForm.controls.password.errors.required">This field is mendatory</span>
-                    <span *ngIf="signupForm.controls.password.errors.pattern">This field is invalid</span>
+                <mat-label>Short Name</mat-label>
+                <input matInput formControlName="nick_name" required>
+                <mat-error *ngIf="signupForm.controls.nick_name.touched && signupForm.controls.nick_name.invalid">
+                    <span *ngIf="signupForm.controls.nick_name.errors.required">This field is mendatory</span>
+                    <span *ngIf="signupForm.controls.nick_name.errors.pattern">This field is invalid</span>
                 </mat-error>
             </mat-form-field>
+
+            <mat-form-field appearence="fill" fxFlex>
+                <mat-label>Post id</mat-label>
+                <input matInput formControlName="post_id" required>
+                <mat-error *ngIf="signupForm.controls.post_id.touched && signupForm.controls.post_id.invalid">
+                    <span *ngIf="signupForm.controls.post_id.errors.required">This field is mendatory</span>
+                    <span *ngIf="signupForm.controls.post_id.errors.pattern">This field is invalid</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Birthday</mat-label>
+                <input matInput formControlName="birthday" required [matDatepicker]="picker" placeholder="Select from the calender."  readonly="true" required>
+                <mat-error *ngIf="signupForm.controls.birthday.touched">
+                    <span *ngIf="signupForm.controls.birthday.errors.required">This field is mendatory</span>
+                </mat-error>
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            
+            <mat-form-field appearence="fill" fxFlex>
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="user_password" type="password"  required>
+                <mat-error *ngIf="signupForm.controls.user_password.touched && signupForm.controls.user_password.invalid">
+                    <span *ngIf="signupForm.controls.user_password.errors.required">This field is mendatory</span>
+                    <span *ngIf="signupForm.controls.user_password.errors.pattern">This field is invalid.</span>
+                </mat-error>
+            </mat-form-field>
+     
         </div>
     </form>
 </mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button class="buttonSubmit" mat-raised-button color="primary" type="submit" (click)="handleSubmit()">Signup</button>
+    <button class="buttonClose"  mat-raised-button color="primary" mat-dialog-close>Close</button>
+</mat-dialog-actions> 

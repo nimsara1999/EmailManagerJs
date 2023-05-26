@@ -15,6 +15,10 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 
 const NgxUiLoaderConfig:NgxUiLoaderConfig={
   text:"Loading...",
@@ -47,7 +51,10 @@ const NgxUiLoaderConfig:NgxUiLoaderConfig={
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatAutocompleteModule
   ],
   providers: [MatSnackBarModule],
   bootstrap: [AppComponent]

@@ -24,18 +24,24 @@ export class SignupComponent implements OnInit {
     ){}
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
-      name:[null,[Validators.required,Validators.pattern(GlobalConstant.nameRegex)]],
       email:[null,[Validators.required,Validators.pattern(GlobalConstant.emailRegex)]],
-      password:[null,[Validators.required]]
+      user_password:[null,[Validators.required,Validators.pattern(GlobalConstant.passwordRegex)]],
+      recip_name:[null,[Validators.required,Validators.pattern(GlobalConstant.nameRegex)]],
+      nick_name:[null,[Validators.required,Validators.pattern(GlobalConstant.nameRegex)]],
+      post_id:[null,[Validators.required,Validators.pattern(GlobalConstant.numberRegex)]],
+      birthday:[null,[Validators.required,Validators.pattern(GlobalConstant.dateRegex)]],
     })
   }
   handleSubmit(){
     this.ngxService.start();
     var formData = this.signupForm.value;
     var data = {
-      name:formData.name,
       email:formData.email,
-      password:formData.password
+      user_password:formData.user_password,
+      recip_name:formData.recip_name,
+      nick_name:formData.nick_name,
+      post_id:formData.post_id,
+      birthday:formData.birthday
     }
     this.userService.signup(data).subscribe((response:any)=>{
       this.ngxService.stop();

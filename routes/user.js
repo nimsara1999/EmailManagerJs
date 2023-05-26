@@ -20,7 +20,7 @@ router.post('/signup', (req, res) => {
         if (!err) {
             if (results.length <= 0) {
                 query = "INSERT INTO recipient(email,user_password,recip_name,nick_name,post_id,birthday,status) VALUES (?,?,?,?,?,?,0)"
-                connection.query(query, [user.email, user.user_password, user.recip_name, user.nick_name, user.post_id, user.birthday], (err, results) => {
+                connection.query(query, [user.email, user.user_password, user.recip_name, user.nick_name, user.post_id,dateFormat(user.birthday, 'yyyy-MM-dd')], (err, results) => {
                     if (!err) {
                         return res.status(200).json({ message: "Successfully Registered" });
                     }
@@ -182,5 +182,32 @@ router.post('/changePassword',auth.authenticateToken,(req,res)=>{
         }
     })
 })
+
+//change input date format
+function dateFormat(inputDate, format) {
+    //parse the input date
+    const date = new Date(inputDate);
+
+    //extract the parts of the date
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();    
+
+    //replace the month
+    format = format.replace("MM", month.toString().padStart(2,"0"));        
+
+    //replace the year
+    if (format.indexOf("yyyy") > -1) {
+        format = format.replace("yyyy", year.toString());
+    } else if (format.indexOf("yy") > -1) {
+        format = format.replace("yy", year.toString().substr(2,2));
+    }
+
+    //replace the day
+    format = format.replace("dd", day.toString().padStart(2,"0"));
+
+    return format;
+}
+
 
 module.exports = router;
