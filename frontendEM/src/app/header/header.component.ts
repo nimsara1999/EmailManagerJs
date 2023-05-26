@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog'; 
 import { SignupComponent } from '../signup/signup.component';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 
 
 @Component({
@@ -18,9 +19,16 @@ ngOnInit(): void {
 signupAction() {
   const dialogConfig = new MatDialogConfig();
   dialogConfig.autoFocus=false;
-  dialogConfig.backdropClass="signupPanelBlurBackdrop";
-  dialogConfig.panelClass="signupPanel";
+  dialogConfig.backdropClass="blurBackdrop";
+  dialogConfig.panelClass="dialogPanel";
   this.dialog.open(SignupComponent,dialogConfig);
 }
 
+forgotPasswordAction(){
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.autoFocus=false;
+  dialogConfig.backdropClass="blurBackdrop";
+  dialogConfig.panelClass="dialogPanel";
+  this.dialog.open(ForgotPasswordComponent,dialogConfig);
+}
 }

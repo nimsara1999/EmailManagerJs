@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 const NgxUiLoaderConfig:NgxUiLoaderConfig={
@@ -37,7 +38,8 @@ const NgxUiLoaderConfig:NgxUiLoaderConfig={
     AppComponent,
     HeaderComponent,
     DashboardComponent,
-    SignupComponent
+    SignupComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

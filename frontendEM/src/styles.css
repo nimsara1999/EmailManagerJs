@@ -25,13 +25,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 /*implemented in header section*/
-.signupPanelBlurBackdrop{
+.blurBackdrop{
     background-color:rgba(255,255,255,.1);
     backdrop-filter: blur(2px); 
 }
-.signupPanel{
+.dialogPanel{
     width: 425px;
-    height: auto;
+    height: fit-content;
     scroll-behavior:smooth;
 }
 .buttonSubmit {
