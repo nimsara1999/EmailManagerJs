@@ -19,6 +19,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LoginComponent } from './login/login.component';
+import {MatListModule} from '@angular/material/list';
 
 
 const NgxUiLoaderConfig:NgxUiLoaderConfig={
@@ -28,7 +30,7 @@ const NgxUiLoaderConfig:NgxUiLoaderConfig={
   pbColor:"red",
   bgsColor:"red",
   fgsType:SPINNER.ballSpinClockwise,
-  fgsSize:100,
+  fgsSize:30,
   pbDirection:PB_DIRECTION.leftToRight,
   pbThickness:5
 }
@@ -39,7 +41,8 @@ const NgxUiLoaderConfig:NgxUiLoaderConfig={
     HeaderComponent,
     DashboardComponent,
     SignupComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +59,8 @@ const NgxUiLoaderConfig:NgxUiLoaderConfig={
     MatInputModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatListModule
   ],
   providers: [MatSnackBarModule],
   bootstrap: [AppComponent]

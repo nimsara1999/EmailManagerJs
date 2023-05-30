@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog'; 
 import { SignupComponent } from '../signup/signup.component';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { LoginComponent } from '../login/login.component';
 
 
 @Component({
@@ -30,5 +31,13 @@ forgotPasswordAction(){
   dialogConfig.backdropClass="blurBackdrop";
   dialogConfig.panelClass="dialogPanel";
   this.dialog.open(ForgotPasswordComponent,dialogConfig);
+}
+
+loginAction(){
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.autoFocus=false;
+  dialogConfig.backdropClass="blurBackdrop";
+  dialogConfig.panelClass="dialogPanel";
+  this.dialog.open(LoginComponent,dialogConfig);
 }
 }

@@ -4,13 +4,13 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-dialog-content class="mat-typography">
-    <form [formGroup]="signupForm">
+<mat-dialog-content class="dialogbox">
+    <form [formGroup]="signupForm" autocomplete="on">
         <div fxFlex fxLayout ="column">
 
             <mat-form-field appearence="fill" fxFlex>
                 <mat-label>Full Name</mat-label>
-                <input matInput formControlName="recip_name" required>
+                <input matInput formControlName="recip_name" autocomplete="name" required>
                 <mat-error *ngIf="signupForm.controls.recip_name.touched && signupForm.controls.recip_name.invalid">
                     <span *ngIf="signupForm.controls.recip_name.errors.required">This field is mendatory</span>
                     <span *ngIf="signupForm.controls.recip_name.errors.pattern">This field is invalid</span>
@@ -19,7 +19,7 @@
 
             <mat-form-field appearence="fill" fxFlex>
                 <mat-label>Email</mat-label>
-                <input matInput formControlName="email" required>
+                <input matInput formControlName="email" autocomplete="email" required>
                 <mat-error *ngIf="signupForm.controls.email.touched && signupForm.controls.email.invalid">
                     <span *ngIf="signupForm.controls.email.errors.required">This field is mendatory</span>
                     <span *ngIf="signupForm.controls.email.errors.pattern">This field is invalid</span>
@@ -44,7 +44,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field appearence="fill" fxFlex>
                 <mat-label>Birthday</mat-label>
                 <input matInput formControlName="birthday" required [matDatepicker]="picker" placeholder="Select from the calender."  readonly="true" required>
                 <mat-error *ngIf="signupForm.controls.birthday.touched">
